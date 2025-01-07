@@ -40,6 +40,8 @@
   * This must be run through your own installation, you can search your city in the search box and recieve the current weather for that city.
   * A history function is available for the quick check of cities checked in the past.
 
+https://github.com/user-attachments/assets/3ab13ae9-ebfa-4279-b0c1-206a128f0cc6
+
 
   ## Documentation
 
