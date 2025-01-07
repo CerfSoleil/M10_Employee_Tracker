@@ -1,6 +1,8 @@
-import pg from 'pg';
-const { Pool } = pg;
+import dotenv from 'dotenv';
+dotenv.config();
 import inquirer from 'inquirer';
+import {pool, connectToDb} from './connection.js';
+connectToDb().then(() => console.log('connected to database')).catch(err => console.error(err));
 
 // Import all the functions
 import { viewEmployeesByDepartment } from './functions/employeesByDepartment.js';
@@ -11,16 +13,7 @@ import { updateEmployee } from './functions/updateEmployee.js';
 import { deleteEmployee } from './functions/deleteEmployee.js';
 import { deleteDepartment } from './functions/deleteDepartment.js';
 import { viewTotalSalariesByDepartment } from './functions/salaryByDepartment.js';
-
-// Create the Pool instance
-const pool = new Pool({
-  //replaced process.env.DB_USER and process.env.DB_NAME with direct mentions for testing
-    user: 'postgres',
-    host: 'localhost',
-    database: 'company_db',
-    password: process.env.DB_PASSWORD,
-    port: 5432,
-});
+import { viewAllEmployees } from './functions/viewAllEmployees.js'
 
 // Main menu
 async function mainMenu() {
@@ -32,6 +25,7 @@ async function mainMenu() {
             choices: [
                 'View Employees by Department',
                 'View Employees by Manager',
+                'View All Employees',
                 'Add Employee',
                 'Add Department',
                 'Update Employee',
@@ -49,6 +43,9 @@ async function mainMenu() {
             break;
         case 'View Employees by Manager':
             await viewEmployeesByManager(pool);
+            break;
+        case 'View All Employees':
+            await viewAllEmployees(pool);
             break;
         case 'Add Employee':
             await addEmployee(pool);
